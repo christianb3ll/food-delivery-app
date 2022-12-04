@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'; 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, Header } from '@react-navigation/stack';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import { StackActions } from 'react-navigation';
 
@@ -22,6 +22,7 @@ function Homescreen(){
             tagline="The BIGGEST burgers in town"
             eta="10-30"
             imgUri={require('./assets/bigger-burgers.jpg')}
+            // action={navigation.navigate('Menu')}
           />
         </Section>
       </TableView>
@@ -33,7 +34,22 @@ const HomescreenCell = function (props){
   return(
     <Cell
       {...props}
-      
+      // contentContainerStyle={styles.restaurantCell}
+      highlightUnderlayColor='#ccc'
+      highlightActiveOpacity={0.5}
+      onPress={props.action}
+      cellContentView={
+        <View style={styles.restaurantCell}>
+          {/* <Image source={props.imgUri} style={styles.restaurantThumb} /> */}
+          <View>
+            <Text>{props.eta}</Text>
+          </View>
+          <Text>{props.title}</Text>
+          <Text>{props.tagline}</Text>
+
+        </View>
+        
+      }
     />
   )
 };
@@ -71,8 +87,18 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  restaurantCell: {
+    backgroundColor: 'green',
+    flex: 1,
+    height: 290,
+  },
+  restaurantThumb: {
+    backgroundColor: 'red',
+    // width: '100%'
+  }
 });
