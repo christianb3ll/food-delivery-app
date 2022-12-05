@@ -11,7 +11,7 @@ import { StackActions } from 'react-navigation';
 // Japanese Food - Photo by Richard Iwaki | https://unsplash.com/photos/2cpx1N7Us5Q
 
 
-function Homescreen(){
+function Homescreen({navigation}){
   return(
     <ScrollView>
       <TableView>
@@ -22,7 +22,7 @@ function Homescreen(){
             tagline="The BIGGEST burgers in town"
             eta="10-30"
             imgUri={require('./assets/bigger-burgers.jpg')}
-            // action={navigation.navigate('Menu')}
+            action={()=> navigation.navigate('Menu')}
           />
         </Section>
       </TableView>
@@ -40,7 +40,7 @@ const HomescreenCell = function (props){
       onPress={props.action}
       cellContentView={
         <View style={styles.restaurantCell}>
-          {/* <Image source={props.imgUri} style={styles.restaurantThumb} /> */}
+          <Image source={props.imgUri} style={styles.restaurantThumb} />
           <View>
             <Text>{props.eta}</Text>
           </View>
