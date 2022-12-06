@@ -10,20 +10,55 @@ import { StackActions } from 'react-navigation';
 // Burger - Photo by Mae Mu | https://unsplash.com/photos/I7A_pHLcQK8
 // Japanese Food - Photo by Richard Iwaki | https://unsplash.com/photos/2cpx1N7Us5Q
 
+const Stack = createStackNavigator();
+
+// Restaurant data as an array of restaurant objects
+const restaurantData = [{
+  title: "Bigger Burgers",
+  tagline: "The BIGGEST burgers in town",
+  eta: "10-30",
+  imgUri: require("./assets/bigger-burgers.jpg"),
+  items: [{
+    "title":"Gelato",
+    "contents":[{
+      "title":"Vanilla"},{
+      "title":"Chocolate"}
+      ]
+    }]
+  },{
+  title: "Mogu Mogu Sushi",
+  tagline: "All the Sushi you can handle... Plus a little more!",
+  eta: "1h",
+  imgUri: require("./assets/mogu-mogu.jpg"),
+  items: [{
+    "title":"Sushi",
+    "contents":[{
+      "title":"Salmon"},{
+      "title":"Tuna"}
+      ]
+    }]
+  }
+];
 
 function Homescreen({navigation}){
   return(
     <ScrollView>
       <TableView>
-        {/* this might not work */}
         <Section header='' isHidden='true' separatorTintColor={'#ccc'}>
-          <HomescreenCell
-            title="Bigger Burgers"
-            tagline="The BIGGEST burgers in town"
-            eta="10-30"
-            imgUri={require('./assets/bigger-burgers.jpg')}
-            action={()=> navigation.navigate('Menu')}
+          {restaurantData.map((restaurant, i)=>
+            <HomescreenCell
+            title={restaurant.title}
+            tagline={restaurant.tagline}
+            eta={restaurant.eta}
+            imgUri={restaurant.imgUri}
+            action={()=> navigation.navigate('Menu', { items: restaurant.items })}
           />
+          )}
+          
+
+          
+
+          
         </Section>
       </TableView>
     </ScrollView>
@@ -62,15 +97,23 @@ function Restaurants(){
   )
 }
 
-function Menu(){
+function Menu({route, navigation}){
   return(
-    <View>
-      
-    </View>
+    <ScrollView>
+      <TableView>
+        {route.params.items.map((item, i)=>
+          <Section>
+            {item.contents.map((dish, j)=>(
+              <Cell>
+                <Text>{dish.title}</Text>
+              </Cell>
+            ))}
+          </Section>
+        )}
+      </TableView>
+    </ScrollView>
   )
 }
-
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
