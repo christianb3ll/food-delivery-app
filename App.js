@@ -3,7 +3,6 @@ import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createStackNavigator, Header } from '@react-navigation/stack';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
-import { StackActions } from 'react-navigation';
 // restaurant data imported
 import {restaurantDatabase} from './restaurant-data';
 
@@ -40,6 +39,7 @@ function Homescreen({navigation}){
     <ScrollView>
       <TableView>
         <Section header='' isHidden='true' separatorTintColor={'#ccc'}>
+          {/* Map through the restaurant data and create a cell for each */}
           {restaurantData.map((restaurant, i)=> 
             <HomescreenCell
               key={restaurant.title}
@@ -58,63 +58,69 @@ function Homescreen({navigation}){
   )
 }
 
+// HomescreenCell that displays restaurant data
 const HomescreenCell = function (props){
   return(
     <Cell
       {...props}
-      // contentContainerStyle={styles.restaurantCell}
       highlightUnderlayColor='#ccc'
       highlightActiveOpacity={0.5}
       onPress={props.action}
       cellContentView={
         <View style={styles.restaurantCell}>
+          {/* Image and ETA container */}
           <View style={styles.restaurantImageContainer}>
             <Image source={props.imgUri} style={styles.restaurantThumb} />
+            {/* ETA */}
             <View style={styles.etaContainer}>
               <Image source={clockIcon}/>
               <Text style={styles.etaText}>{props.eta}</Text>
             </View>
           </View>
+          {/* Restaurant details */}
           <View style={styles.restaurantDetails} >
+            {/* Restaurant Rating */}
             <View style={styles.ratingContainer}>
               <Text style={styles.starRating}>★★★★★</Text>
               <Text style={styles.reviewCount}>({props.reviewCount})</Text>
             </View>
-            
+            {/* Title and tagline */}
             <Text style={styles.restaurantTitle}>{props.title}</Text>
             <Text style={styles.restaurantTagline}>{props.tagline}</Text>
           </View>
         </View>
-        
       }
     />
   )
 };
 
+// Creates the menu for each restaurant page
 function Menu({route, navigation}){
   return(
     <ScrollView>
       <TableView>
         {route.params.items.map((item, i)=>
-          <Section headerTextStyle={styles.menuSectionHeader} header={item.title} key={item.title}>
-            
+          <Section 
+            headerTextStyle={styles.menuSectionHeader} 
+            header={item.title} 
+            key={item.title}
+            sectionTintColor={"#FF5F5F"}
+          >
             {item.contents.map((dish, j)=>(
               <Cell
                 cellStyle="Basic"
                 title={dish.title}
                 key={dish.title}
+                isDisabled={dish.inStock}
                 contentContainerStyle={styles.menuSection}
+                backgroundColor={"#FF5F5F"}
                 cellContentView={
                   <View style={styles.menuCell}>
-                    <Image style={styles.itemThumb} source={dish.imgUri} />
-                    <Text style={styles.itemText}>{dish.title}</Text>
-                    
+                    <Image style={[styles.itemThumb, dish.inStock ? '' : styles.itemThumbDisabled]} source={dish.imgUri} />
+                    <Text style={styles.itemText}>{dish.title} {dish.inStock ? '' : 'SOLD OUT'}</Text>
                   </View>
-                  
               }/>
-                
             ))}
-          
           </Section>
         )}
       </TableView>
@@ -127,7 +133,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Home' component={Homescreen}/>
-        {/* <Stack.Screen name='Restaurants' component={Restaurants}/> */}
         <Stack.Screen name='Menu' component={Menu}/>
       </Stack.Navigator>
     </NavigationContainer>
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
     width: '40%'
   },
   starRating: {
-    flex: 4,
+    flex: 2,
     color: '#FF5F5F'
   },
   reviewCount: {
@@ -212,12 +217,15 @@ const styles = StyleSheet.create({
   },
   menuSectionHeader: {
     fontFamily: 'Arial',
-    fontSize:  16,
+    fontSize:  24,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'white'
   },
   menuSection: {
     flex: 1,
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 5
   },
   menuCell: {
     flex: 1,
@@ -233,6 +241,9 @@ const styles = StyleSheet.create({
   },
   itemThumb: {
     flex:1,
-    width: '100%',
+    width: '100%'
+  },
+  itemThumbDisabled: {
+    opacity: 0.3
   }
 });

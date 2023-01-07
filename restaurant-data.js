@@ -12,13 +12,16 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Big Boppa Set",
-                        "imgUri": require("./assets/food-images/burger.jpg")
+                        "imgUri": require("./assets/food-images/burger.jpg"),
+                        "inStock": true
                     },{
                         "title":"Big Boppa XL Set",
-                        "imgUri": require("./assets/food-images/burger.jpg")
+                        "imgUri": require("./assets/food-images/burger.jpg"),
+                        "inStock": true
                     },{
                         "title":"Salad Crunch Set",
-                        "imgUri": require("./assets/food-images/salad.jpg")
+                        "imgUri": require("./assets/food-images/salad.jpg"),
+                        "inStock": false
                     }
                 ]
             },
@@ -27,10 +30,12 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Vanilla",
-                        "imgUri": require("./assets/food-images/vanilla-icecream.jpg")
+                        "imgUri": require("./assets/food-images/vanilla-icecream.jpg"),
+                        "inStock": true
                     },{
                         "title":"Chocolate",
-                        "imgUri": require("./assets/food-images/chocolate-icecream.jpg")
+                        "imgUri": require("./assets/food-images/chocolate-icecream.jpg"),
+                        "inStock": true
                     }
                 ]
             }
@@ -49,13 +54,16 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Salmon Nigiri Set",
-                        "imgUri": require("./assets/food-images/salmon.jpg")
+                        "imgUri": require("./assets/food-images/salmon.jpg"),
+                        "inStock": true
                     },{
                         "title":"Tuna Set",
-                        "imgUri": require("./assets/food-images/tuna.jpg")
+                        "imgUri": require("./assets/food-images/tuna.jpg"),
+                        "inStock": false
                     },{
                         "title":"Vegetable Set",
-                        "imgUri": require("./assets/food-images/vegetarian-sushi.jpg")
+                        "imgUri": require("./assets/food-images/vegetarian-sushi.jpg"),
+                        "inStock": true
                     }
                 ]
             },
@@ -64,10 +72,12 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Green Tea",
-                        "imgUri": require("./assets/food-images/green-tea.jpg")
+                        "imgUri": require("./assets/food-images/green-tea.jpg"),
+                        "inStock": true
                     },{
                         "title":"Tapioca",
-                        "imgUri": require("./assets/food-images/tapioca.jpg")
+                        "imgUri": require("./assets/food-images/tapioca.jpg"),
+                        "inStock": false
                     }
                 ]
             }
@@ -86,10 +96,12 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Chocolate Chip",
-                        "imgUri": require("./assets/food-images/chocolate-cookie.jpg")
+                        "imgUri": require("./assets/food-images/chocolate-cookie.jpg"),
+                        "inStock": true
                     },{
                         "title":"Raisin",
-                        "imgUri": require("./assets/food-images/raisin-cookie.jpg")
+                        "imgUri": require("./assets/food-images/raisin-cookie.jpg"),
+                        "inStock": true
                     }
                 ]
             },
@@ -98,10 +110,12 @@ export const restaurantDatabase = [
                 "contents":[
                     {
                         "title":"Luxurious Chocolate",
-                        "imgUri": require("./assets/food-images/chocolate-cake.jpg")
+                        "imgUri": require("./assets/food-images/chocolate-cake.jpg"),
+                        "inStock": false
                     },{
                         "title":"Devilish Cheesecake",
-                        "imgUri": require("./assets/food-images/cheesecake.jpg")
+                        "imgUri": require("./assets/food-images/cheesecake.jpg"),
+                        "inStock": true
                     }
                 ]
             }
