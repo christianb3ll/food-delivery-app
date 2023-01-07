@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, Header } from '@react-navigation/stack';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import { StackActions } from 'react-navigation';
+// restaurant data imported
+import {restaurantDatabase} from './restaurant-data';
 
 // Image Credits
 // Cookie - Photo by Jennifer Pallian | https://unsplash.com/photos/OfdDiqx8Cz8
@@ -12,53 +14,25 @@ import { StackActions } from 'react-navigation';
 
 const Stack = createStackNavigator();
 
-// Restaurant data as an array of restaurant objects
-const restaurantData = [{
-  title: "Bigger Burgers",
-  tagline: "The BIGGEST burgers in town",
-  eta: "10-30",
-  imgUri: require("./assets/bigger-burgers.jpg"),
-  items: [{
-    "title":"Gelato",
-    "contents":[{
-      "title":"Vanilla"},{
-      "title":"Chocolate"}
-      ]
-    }]
-  },{
-  title: "Mogu Mogu Sushi",
-  tagline: "All the Sushi you can handle... Plus a little more!",
-  eta: "1h",
-  imgUri: require("./assets/mogu-mogu.jpg"),
-  items: [{
-    "title":"Sushi",
-    "contents":[{
-      "title":"Salmon"},{
-      "title":"Tuna"}
-      ]
-    }]
-  }
-];
+const restaurantData = restaurantDatabase;
 
+// Homescreen that lists all restaurants
 function Homescreen({navigation}){
   return(
     <ScrollView>
       <TableView>
         <Section header='' isHidden='true' separatorTintColor={'#ccc'}>
-          {restaurantData.map((restaurant, i)=>
+          {restaurantData.map((restaurant, i)=> 
             <HomescreenCell
-            title={restaurant.title}
-            tagline={restaurant.tagline}
-            eta={restaurant.eta}
-            imgUri={restaurant.imgUri}
-            action={()=> navigation.navigate('Menu', { items: restaurant.items })}
+              key={restaurant.title}
+              title={restaurant.title}
+              tagline={restaurant.tagline}
+              eta={restaurant.eta}
+              imgUri={restaurant.imgUri}
+              // Pass the  restaurant items with restaurant name and tagline
+              action={()=> navigation.navigate('Menu', {items: restaurant.items })}
           />
           )}
-          
-
-          
-
-          
         </Section>
       </TableView>
     </ScrollView>
@@ -76,11 +50,11 @@ const HomescreenCell = function (props){
       cellContentView={
         <View style={styles.restaurantCell}>
           <Image source={props.imgUri} style={styles.restaurantThumb} />
-          <View>
-            <Text>{props.eta}</Text>
+          <View style={styles.etaContainer}>
+            <Text style={styles.etaText}>{props.eta}</Text>
           </View>
-          <Text>{props.title}</Text>
-          <Text>{props.tagline}</Text>
+          <Text style={styles.restaurantTitle}>{props.title}</Text>
+          <Text style={styles.restaurantTagline}>{props.tagline}</Text>
 
         </View>
         
@@ -102,10 +76,10 @@ function Menu({route, navigation}){
     <ScrollView>
       <TableView>
         {route.params.items.map((item, i)=>
-          <Section>
+          <Section key={item.title}>
             {item.contents.map((dish, j)=>(
               <Cell>
-                <Text>{dish.title}</Text>
+                <Text key={dish.title}>{dish.title}</Text>
               </Cell>
             ))}
           </Section>
@@ -136,12 +110,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   restaurantCell: {
-    backgroundColor: 'green',
+    backgroundColor: '#FF5F5F',
     flex: 1,
     height: 290,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 30,
   },
   restaurantThumb: {
-    backgroundColor: 'red',
-    // width: '100%'
+    height: 100,
+  },
+  etaContainer: {
+    position: 'absolute',
+    width: 50,
+    height: 20,
+    right: 10,
+    backgroundColor: 'white',
+    borderRadius: 5,
+
+  },
+  etaText: {
+    fontSize: 24
+  },
+  restaurantTitle: {
+    fontFamily: 'Avenir Next',
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  restaurantTagline: {
+    fontFamily: 'Arial',
+    fontSize: 12,
   }
 });
