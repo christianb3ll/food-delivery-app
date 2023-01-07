@@ -96,18 +96,25 @@ function Menu({route, navigation}){
     <ScrollView>
       <TableView>
         {route.params.items.map((item, i)=>
-          <Section style={styles.menuSection} header={item.title} key={item.title}>
+          <Section headerTextStyle={styles.menuSectionHeader} header={item.title} key={item.title}>
+            
             {item.contents.map((dish, j)=>(
               <Cell
                 cellStyle="Basic"
                 title={dish.title}
-                contentContainerStyle={styles.menuCell}
                 key={dish.title}
+                contentContainerStyle={styles.menuSection}
                 cellContentView={
-                  <Text>{dish.title}</Text>
+                  <View style={styles.menuCell}>
+                    <Image style={styles.itemThumb} source={dish.imgUri} />
+                    <Text style={styles.itemText}>{dish.title}</Text>
+                    
+                  </View>
+                  
               }/>
                 
             ))}
+          
           </Section>
         )}
       </TableView>
@@ -155,8 +162,9 @@ const styles = StyleSheet.create({
   etaContainer: {
     position: 'absolute',
     flexDirection: 'row',
-    width: 100,
-    height: 30,
+    alignItems: 'flex-end',
+    padding: 5,
+    width: 70,
     right: 20,
     bottom: 20,
     backgroundColor: 'white',
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   etaText: {
-    flex: 1,
+    flex: 2,
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fontSize: 14,
@@ -189,24 +197,42 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     position: 'absolute',
-    top: 5,
-    right: 5,
-    backgroundColor: 'green'
+    right: 10,
+    top: 10,
+    flex: 1,
+    flexDirection: 'row',
+    width: '40%'
   },
   starRating: {
-    flex: 1,
+    flex: 4,
     color: '#FF5F5F'
   },
   reviewCount: {
-    flex: 1
+    flex: 1,
+  },
+  menuSectionHeader: {
+    fontFamily: 'Arial',
+    fontSize:  16,
+    fontWeight: 'bold',
+    color: 'black'
   },
   menuSection: {
     flex: 1,
-    flexDirection: 'row',
-    flexBasis: '50%'
   },
   menuCell: {
     flex: 1,
-    backgroundColor: 'red'
+    flexDirection: 'row',
+    padding: 10
+  },
+  itemText: {
+    flex: 1,
+    fontFamily: 'Arial',
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: 14
+  },
+  itemThumb: {
+    flex:1,
+    width: '100%',
   }
 });
