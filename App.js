@@ -9,8 +9,22 @@ import {restaurantDatabase} from './restaurant-data';
 
 // Image Credits
 // Cookie - Photo by Jennifer Pallian | https://unsplash.com/photos/OfdDiqx8Cz8
+// Cookie 2 - Photo by Lisa Fotios | https://www.pexels.com/photo/macro-photography-of-pile-of-3-cookie-230325/
 // Burger - Photo by Mae Mu | https://unsplash.com/photos/I7A_pHLcQK8
+// Burger2 - Photo by Ruslan Khmelevsky | https://www.pexels.com/photo/burger-on-wooden-chopping-board-13743449/
+// Salad - Photo by Dana Tentis | https://www.pexels.com/photo/vegetable-salad-with-wheat-bread-on-the-side-1213710/
+// Ice Cream - Photo by min che | https://www.pexels.com/photo/close-up-of-scoops-of-ice-cream-in-bowls-7491892/
 // Japanese Food - Photo by Richard Iwaki | https://unsplash.com/photos/2cpx1N7Us5Q
+// Salmon - Photo by Cup of Couple |  https://www.pexels.com/photo/overhead-shot-of-a-plate-of-nigiri-8472620/
+// Tuna - Photo by Mak_ jp | https://www.pexels.com/photo/a-close-up-shot-of-delicious-nigiri-on-a-plate-10138043/
+// Vegetarian - Photo by Shameel mukkath | https://www.pexels.com/photo/sushi-rolls-10296389/
+// Green tea - Photo by NipananLifestyle.com | https://www.pexels.com/photo/photo-of-matcha-drink-on-a-wooden-tray-1581484/
+// Tapioca - Photo by Telly Mina | https://www.pexels.com/photo/milk-teas-with-tapioca-pearls-12666754/
+// Raisin Cookie - Photo by Terrance Barksdale | https://www.pexels.com/photo/close-up-photo-of-an-oatmeal-cookie-with-raisins-8837035/
+// Chocolate cake - Photo by Abhinav Goswami | https://www.pexels.com/photo/sliced-cake-on-plate-291528/
+// Cheesecake - Photo by Suzy Hazelwood | https://www.pexels.com/photo/cheesecake-1126359/
+
+// Icons from FontAwesome | https://fontawesome.com/icons
 
 const Stack = createStackNavigator();
 
@@ -84,9 +98,15 @@ function Menu({route, navigation}){
         {route.params.items.map((item, i)=>
           <Section style={styles.menuSection} header={item.title} key={item.title}>
             {item.contents.map((dish, j)=>(
-              <Cell key={dish.title} style={styles.menuCell}>
-                <Text>{dish.title}</Text>
-              </Cell>
+              <Cell
+                cellStyle="Basic"
+                title={dish.title}
+                contentContainerStyle={styles.menuCell}
+                key={dish.title}
+                cellContentView={
+                  <Text>{dish.title}</Text>
+              }/>
+                
             ))}
           </Section>
         )}
