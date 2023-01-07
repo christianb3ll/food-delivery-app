@@ -14,7 +14,11 @@ import {restaurantDatabase} from './restaurant-data';
 
 const Stack = createStackNavigator();
 
+// Setup the restaurant data
 const restaurantData = restaurantDatabase;
+
+// import image icons
+const clockIcon = require('./assets/Clock.png');
 
 // Homescreen that lists all restaurants
 function Homescreen({navigation}){
@@ -29,7 +33,8 @@ function Homescreen({navigation}){
               tagline={restaurant.tagline}
               eta={restaurant.eta}
               imgUri={restaurant.imgUri}
-              // Pass the  restaurant items with restaurant name and tagline
+              rating={restaurant.rating}
+              reviewCount={restaurant.reviewCount}
               action={()=> navigation.navigate('Menu', {items: restaurant.items })}
           />
           )}
@@ -49,13 +54,22 @@ const HomescreenCell = function (props){
       onPress={props.action}
       cellContentView={
         <View style={styles.restaurantCell}>
-          <Image source={props.imgUri} style={styles.restaurantThumb} />
-          <View style={styles.etaContainer}>
-            <Text style={styles.etaText}>{props.eta}</Text>
+          <View style={styles.restaurantImageContainer}>
+            <Image source={props.imgUri} style={styles.restaurantThumb} />
+            <View style={styles.etaContainer}>
+              <Image source={clockIcon}/>
+              <Text style={styles.etaText}>{props.eta}</Text>
+            </View>
           </View>
-          <Text style={styles.restaurantTitle}>{props.title}</Text>
-          <Text style={styles.restaurantTagline}>{props.tagline}</Text>
-
+          <View style={styles.restaurantDetails} >
+            <View style={styles.ratingContainer}>
+              <Text style={styles.starRating}>★★★★★</Text>
+              <Text style={styles.reviewCount}>({props.reviewCount})</Text>
+            </View>
+            
+            <Text style={styles.restaurantTitle}>{props.title}</Text>
+            <Text style={styles.restaurantTagline}>{props.tagline}</Text>
+          </View>
         </View>
         
       }
@@ -63,23 +77,15 @@ const HomescreenCell = function (props){
   )
 };
 
-function Restaurants(){
-  return(
-    <View>
-
-    </View>
-  )
-}
-
 function Menu({route, navigation}){
   return(
     <ScrollView>
       <TableView>
         {route.params.items.map((item, i)=>
-          <Section key={item.title}>
+          <Section style={styles.menuSection} header={item.title} key={item.title}>
             {item.contents.map((dish, j)=>(
-              <Cell>
-                <Text key={dish.title}>{dish.title}</Text>
+              <Cell key={dish.title} style={styles.menuCell}>
+                <Text>{dish.title}</Text>
               </Cell>
             ))}
           </Section>
@@ -94,7 +100,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Home' component={Homescreen}/>
-        <Stack.Screen name='Restaurants' component={Restaurants}/>
+        {/* <Stack.Screen name='Restaurants' component={Restaurants}/> */}
         <Stack.Screen name='Menu' component={Menu}/>
       </Stack.Navigator>
     </NavigationContainer>
@@ -112,25 +118,45 @@ const styles = StyleSheet.create({
   restaurantCell: {
     backgroundColor: '#FF5F5F',
     flex: 1,
+    flexDirection: 'column',
     height: 290,
     borderRadius: 5,
     padding: 10,
     marginBottom: 30,
   },
+  restaurantImageContainer: {
+    flex: 2,
+    padding: 10
+  },
   restaurantThumb: {
-    height: 100,
+    width: '100%',
+    height: '100%'
   },
   etaContainer: {
     position: 'absolute',
-    width: 50,
-    height: 20,
-    right: 10,
+    flexDirection: 'row',
+    width: 100,
+    height: 30,
+    right: 20,
+    bottom: 20,
     backgroundColor: 'white',
     borderRadius: 5,
-
+  },
+  clockIcon: {
+    flex: 1
   },
   etaText: {
-    fontSize: 24
+    flex: 1,
+    fontFamily: 'Arial',
+    fontWeight: 'bold',
+    fontSize: 14,
+    textAlign: 'right'
+  },
+  restaurantDetails: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: 'white'
   },
   restaurantTitle: {
     fontFamily: 'Avenir Next',
@@ -140,5 +166,27 @@ const styles = StyleSheet.create({
   restaurantTagline: {
     fontFamily: 'Arial',
     fontSize: 12,
+  },
+  ratingContainer: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: 'green'
+  },
+  starRating: {
+    flex: 1,
+    color: '#FF5F5F'
+  },
+  reviewCount: {
+    flex: 1
+  },
+  menuSection: {
+    flex: 1,
+    flexDirection: 'row',
+    flexBasis: '50%'
+  },
+  menuCell: {
+    flex: 1,
+    backgroundColor: 'red'
   }
 });
